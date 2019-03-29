@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Letter Psychic</title>
+</head>
+
+<body>
+
+    <h1>Can You Guess the Letter I'm Thinking?</h1>
+
+        <p>Think hard! And press the first letter to guess.</p>
+       
+        <div id="answerDisplay"></div>
+        <br>
+
+        <div id="letters"></div>
+        <div id="guessleft"></div>
+        <div id="wins"></div>
+        <div id="losses"></div>
+
+
+    </div>
+
+    <script type="text/javascript">
+        //Choosing a random letter
+        //Create an array of letters
+
+        var options = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];;
+        //Computer chooses random letter from array
+        var compAns = options[Math.floor(Math.random() * options.length)];
+        //User Guess is captured by keystroke
+        var uGuess = "";
+        //User Guesses are added to an array
+        var lettersGuessed = [];
+        //Wins will be tracked every time game is played
+        var wins = 0;
+        //Wins will be tracked every time game is played
+        var losses = 0;
+        //Need to keep track of guesses left
+        var guessLeft = 5;
+        //No more than 5 guesses
+        var maxGuess = 5;
+
+        //User pressing key will start even
+        document.onkeyup = function (event) {
+            uGuess = event.key;
+        }
+        //On keystroke will deliver User Guess,does it match the Computer Answer. Lives will be reset.
+        function initGame() {
+            guessLeft = maxGuess;
+            var compAns = options[Math.floor(Math.random() * options.length)];
+            document.onkeyup = function () {
+                var uGuess = String.fromCharCode(event.keyCode).toLowerCase();
+                };
+            var lettersGuessed = [];
+        }
+        //This will compare User Guess to Computer Answer
+        function checkAnswer() {
+            if (uGuess == compAns) {
+                answerDisplay.innerHTML = "You win! " + compAns + " is correct. " +
+                    "Please input your next guess to start again.";
+                wins++;
+                initGame();
+                return;
+            }
+
+            else {
+                answerDisplay.innerHTML = "Try again!";
+                gLeft -= 1;
+                lettersGuessed.push(String.fromCharCode(uGuess))
+            }
+
+             if (gLeft === 0) {
+                answerDisplay.innerHTML = " No guesses left - you lost!";
+                losses++;
+                initGame();
+            }
+        }
+        //This is all the displays that will be updated based on outcomes
+        function display() {
+            document.getElementById("letter").innerHTML = "You Guessed..." + lettersGuessed;
+            document.getElementById("guessleft").innerHTML = "You have " + guessLeft + "guesses left";
+            document.getElementById("wins").innerHTML = "Wins: " + wins;
+            document.getElementById("losses").innerHTML = "Losses: " + losses;
+        }
+
+
+    </script>
+
+</body>
+
+</html>
